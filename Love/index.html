@@ -1,0 +1,653 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<HEAD>
+    <TITLE> OneHyT </TITLE>
+    <META NAME="Generator" CONTENT="EditPlus">
+    <META NAME="Author" CONTENT="">
+    <META NAME="Keywords" CONTENT="">
+    <META NAME="Description" CONTENT="">
+    <link rel="shortcut icon" href="./Heart-I-Love-You-icon.png" type="image/x-icon">
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+        html,
+        body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background: #000;
+        }
+
+        #pink-board {
+            position: relative;
+            /* width: 100%;
+            height: 100%; */
+
+            width: 500px;
+            height: 500px;
+            margin: auto;
+            display: flex;
+            top: calc(50% - 250px);
+        }
+
+        #canvas {
+            position: absolute;
+            top: 0;
+        }
+
+        /* #demo {
+            position: absolute;
+            top: calc(50%);
+            animation: animate 1s infinite;
+            left: calc(50%);
+            font-style: italic;
+            color: #fff;
+            z-index: 1;
+        } */
+
+        .text {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            font-style: italic;
+        }
+
+        .text1 {
+            opacity: 0;
+            transition: all 2s;
+            animation: show 3s ease-in-out infinite .5s
+        }
+
+        .text2 {
+            opacity: 0;
+            transition: all 2s;
+            animation: show 3s ease-in-out infinite 1s
+        }
+
+        .text3 {
+            opacity: 0;
+            transition: all 2s;
+            animation: show 3s ease-in-out infinite 1.5s
+        }
+
+        #pink-board {
+            transition: all 2s;
+            animation: animate 1.3s infinite;
+        }
+
+        .wrap-date {
+            position: fixed;
+            bottom: 100px;
+            left: 0;
+            right: 0;
+        }
+
+        #snow_fall {
+            width: 100%;
+            height: 100vh;
+        }
+
+        #year,
+        #days,
+        #date {
+            display: flex;
+            font-size: 30px;
+            text-align: center;
+            justify-content: center;
+            font-weight: bold;
+
+            color: transparent;
+            background: conic-gradient(#f72f35 12%, #30c5ff 12%,
+                    #30c5ff 35%, #ffd700 35%,
+                    #ffd700 55%, #ff69b4 55%,
+                    #ff69b4 70%, #d1e231 70%,
+                    #d1e231 90%, #d09ee1 90%);
+            background-size: 3%;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        #particle_canvas {
+            display: block;
+        }
+
+
+        @keyframes animate {
+            0% {
+                transform: scale(1);
+            }
+
+            40% {
+                transform: scale(0.8);
+            }
+
+            /* 60% {
+                transform: scale(1);
+            } */
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes show {
+            from {
+                font-size: 32px;
+                opacity: 0;
+            }
+
+            50% {
+                font-size: 64px;
+                opacity: 1;
+            }
+
+            80% {
+                font-size: 40px;
+                opacity: 1;
+            }
+
+            to {
+                font-size: 32px;
+                opacity: 0;
+            }
+        }
+
+
+
+        /*snowfall*/
+
+        .snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+    </style>
+</HEAD>
+
+<BODY>
+    <canvas id="pink-board">
+    </canvas>
+    <h1 class="text">
+        <span class="text1">H</span>
+        <span class="text2">y</span>
+        <span class="text3">T</span>
+    </h1>
+    <div class="wrap-date">
+        <span id="year"></span>
+        <span id="days"></span>
+        <span id="date"></span>
+    </div>
+
+    <!-- <canvas id="canvas"></canvas> -->
+    <canvas class="snow" id="snow" width="1848" height="515"></canvas>
+    <script>
+        (function () {
+
+            var canvas, ctx;
+            var points = [];
+            var maxDist = 100;
+
+            function init() {
+                //Add on load scripts
+                canvas = document.getElementById("snow");
+                ctx = canvas.getContext("2d");
+                resizeCanvas();
+                pointFun();
+                setInterval(pointFun, 20);
+                window.addEventListener('resize', resizeCanvas, false);
+            }
+            //Particle constructor
+            function point() {
+                this.x = Math.random() * (canvas.width + maxDist) - (maxDist / 2);
+                this.y = Math.random() * (canvas.height + maxDist) - (maxDist / 2);
+                this.z = (Math.random() * 0.5) + 0.5;
+                this.vx = ((Math.random() * 2) - 0.5) * this.z;
+                this.vy = ((Math.random() * 1.5) + 1.5) * this.z;
+                this.fill = "rgba(255,255,255," + ((0.4 * Math.random()) + 0.5) + ")";
+                this.dia = ((Math.random() * 2.5) + 1.5) * this.z;
+                points.push(this);
+            }
+            //Point generator
+            function generatePoints(amount) {
+                var temp;
+                for (var i = 0; i < amount; i++) {
+                    temp = new point();
+                };
+                // console.log(points);
+            }
+            //Point drawer
+            function draw(obj) {
+                ctx.beginPath();
+                ctx.strokeStyle = "transparent";
+                ctx.fillStyle = obj.fill;
+                ctx.arc(obj.x, obj.y, obj.dia, 0, 2 * Math.PI);
+                ctx.closePath();
+                ctx.stroke();
+                ctx.fill();
+            }
+            //Updates point position values
+            function update(obj) {
+                obj.x += obj.vx;
+                obj.y += obj.vy;
+                if (obj.x > canvas.width + (maxDist / 2)) {
+                    obj.x = -(maxDist / 2);
+                }
+                else if (obj.xpos < -(maxDist / 2)) {
+                    obj.x = canvas.width + (maxDist / 2);
+                }
+                if (obj.y > canvas.height + (maxDist / 2)) {
+                    obj.y = -(maxDist / 2);
+                }
+                else if (obj.y < -(maxDist / 2)) {
+                    obj.y = canvas.height + (maxDist / 2);
+                }
+            }
+            //
+            function pointFun() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (var i = 0; i < points.length; i++) {
+                    draw(points[i]);
+                    update(points[i]);
+                };
+            }
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                points = [];
+                generatePoints(window.innerWidth / 3);
+                pointFun();
+            }
+
+            //Execute when DOM has loaded
+            document.addEventListener('DOMContentLoaded', init, false);
+        })();
+
+
+
+        function changeColor() {
+            let letters = "0123456789ABCDEF",
+                color = "#";
+
+            for (let i = 0; i < 6; i++) {
+                let random = Math.floor(Math.random() * 16);
+                color += letters[random];
+            }
+            return color;
+        }
+
+        function date() {
+            let x = new Date("2015-01-16");
+            let y = new Date();
+            let z = y - x;
+
+            console.log(y.toLocaleString(), x);
+            document.getElementById("year").innerHTML = Math.floor(Number(z / 365 / 24 / 60 / 60 / 1000)) + " năm,";
+            document.getElementById("days").innerHTML = Math.floor(Number(z / 24 / 60 / 60 / 1000)) + " ngày,";
+            document.getElementById("date").innerHTML = x.toLocaleString().slice(9) + " - " + y.toLocaleString().slice(9);
+        }
+        date()
+
+
+
+
+        function random1() {
+            const txt = document.querySelector(".text")
+            txt.style.color = changeColor()
+        }
+
+
+
+
+        /*
+       * Settings
+       */
+        var settings = {
+            particles: {
+                length: 1000, // maximum amount of particles
+                duration: 2, // particle duration in sec
+                velocity: 100, // particle velocity in pixels/sec
+                effect: -1.2, // play with this for a nice effect
+                size: 20, // particle size in pixels
+            },
+        };
+
+
+        (function () {
+            var b = 0; var c = ["ms", "moz", "webkit", "o"];
+            for (var a = 0; a < c.length && !window.requestAnimationFrame; ++a) {
+                window.requestAnimationFrame = window[c[a] + "RequestAnimationFrame"];
+                window.cancelAnimationFrame = window[c[a] + "CancelAnimationFrame"] || window[c[a] + "CancelRequestAnimationFrame"]
+            }
+            if (!window.requestAnimationFrame) {
+                window.requestAnimationFrame = function (h, e) {
+                    var d = new Date().getTime();
+                    var f = Math.max(0, 16 - (d - b));
+                    var g = window.setTimeout(function () { h(d + f) }, f); b = d + f; return g
+                }
+            }
+            if (!window.cancelAnimationFrame) { window.cancelAnimationFrame = function (d) { clearTimeout(d) } }
+        }());
+
+        /*
+         * Point class
+         */
+        var Point = (function () {
+            function Point(x, y) {
+                this.x = (typeof x !== 'undefined') ? x : 0;
+                this.y = (typeof y !== 'undefined') ? y : 0;
+            }
+            Point.prototype.clone = function () {
+                return new Point(this.x, this.y);
+            };
+            Point.prototype.length = function (length) {
+                if (typeof length == 'undefined')
+                    return Math.sqrt(this.x * this.x + this.y * this.y);
+                this.normalize();
+                this.x *= length;
+                this.y *= length;
+                return this;
+            };
+            Point.prototype.normalize = function () {
+                var length = this.length();
+                this.x /= length;
+                this.y /= length;
+                return this;
+            };
+            return Point;
+        })();
+
+        /*
+         * Particle class
+         */
+        var Particle = (function () {
+            function Particle() {
+                this.position = new Point();
+                this.velocity = new Point();
+                this.acceleration = new Point();
+                this.age = 0;
+            }
+            Particle.prototype.initialize = function (x, y, dx, dy) {
+                this.position.x = x;
+                this.position.y = y;
+                this.velocity.x = dx;
+                this.velocity.y = dy;
+                this.acceleration.x = dx * settings.particles.effect;
+                this.acceleration.y = dy * settings.particles.effect;
+                this.age = 0;
+            };
+            Particle.prototype.update = function (deltaTime) {
+                this.position.x += this.velocity.x * deltaTime;
+                this.position.y += this.velocity.y * deltaTime;
+                this.velocity.x += this.acceleration.x * deltaTime;
+                this.velocity.y += this.acceleration.y * deltaTime;
+                this.age += deltaTime;
+            };
+            Particle.prototype.draw = function (context, image) {
+                function ease(t) {
+                    return (--t) * t * t + 1;
+                }
+                var size = image.width * ease(this.age / settings.particles.duration);
+                context.globalAlpha = 1 - this.age / settings.particles.duration;
+                context.drawImage(image, this.position.x - size / 2, this.position.y - size / 2, size, size);
+            };
+            return Particle;
+        })();
+
+        /*
+         * ParticlePool class
+         */
+        var ParticlePool = (function () {
+            var particles,
+                firstActive = 0,
+                firstFree = 0,
+                duration = settings.particles.duration;
+
+            function ParticlePool(length) {
+                // create and populate particle pool
+                particles = new Array(length);
+                for (var i = 0; i < particles.length; i++)
+                    particles[i] = new Particle();
+            }
+            ParticlePool.prototype.add = function (x, y, dx, dy) {
+                particles[firstFree].initialize(x, y, dx, dy);
+
+                // handle circular queue
+                firstFree++;
+                if (firstFree == particles.length) firstFree = 0;
+                if (firstActive == firstFree) firstActive++;
+                if (firstActive == particles.length) firstActive = 0;
+            };
+            ParticlePool.prototype.update = function (deltaTime) {
+                var i;
+
+                // update active particles
+                if (firstActive < firstFree) {
+                    for (i = firstActive; i < firstFree; i++)
+                        particles[i].update(deltaTime);
+                }
+                if (firstFree < firstActive) {
+                    for (i = firstActive; i < particles.length; i++)
+                        particles[i].update(deltaTime);
+                    for (i = 0; i < firstFree; i++)
+                        particles[i].update(deltaTime);
+                }
+
+                // remove inactive particles
+                while (particles[firstActive].age >= duration && firstActive != firstFree) {
+                    firstActive++;
+                    if (firstActive == particles.length) firstActive = 0;
+                }
+
+
+            };
+            ParticlePool.prototype.draw = function (context, image) {
+                // draw active particles
+                if (firstActive < firstFree) {
+                    for (i = firstActive; i < firstFree; i++)
+                        particles[i].draw(context, image);
+                }
+                if (firstFree < firstActive) {
+                    for (i = firstActive; i < particles.length; i++)
+                        particles[i].draw(context, image);
+                    for (i = 0; i < firstFree; i++)
+                        particles[i].draw(context, image);
+                }
+            };
+            return ParticlePool;
+        })();
+
+        /*
+         * Putting it all together
+         */
+        (function (canvas) {
+            var context = canvas.getContext('2d'),
+                particles = new ParticlePool(settings.particles.length),
+                particleRate = settings.particles.length / settings.particles.duration, // particles/sec
+                time;
+            // get point on heart with -PI <= t <= PI
+            function pointOnHeart(t) {
+                return new Point(
+                    160 * Math.pow(Math.sin(t), 3),
+                    130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
+                );
+            }
+
+            // creating the particle image using a dummy canvas
+            var image = (function () {
+                var canvas = document.createElement('canvas'),
+                    context = canvas.getContext('2d');
+                canvas.width = settings.particles.size;
+                canvas.height = settings.particles.size;
+                // helper function to create the path
+                function to(t) {
+                    var point = pointOnHeart(t);
+                    point.x = settings.particles.size / 2 + point.x * settings.particles.size / 350;
+                    point.y = settings.particles.size / 2 - point.y * settings.particles.size / 350;
+                    return point;
+                }
+                // create the path
+                context.beginPath();
+                var t = -Math.PI;
+                var point = to(t);
+                context.moveTo(point.x, point.y);
+                while (t < Math.PI) {
+                    t += 0.01; // baby steps!
+                    point = to(t);
+                    context.lineTo(point.x, point.y);
+                }
+                context.closePath();
+                // create the fill
+                // context.fillStyle = '#ea80b0';
+                context.fillStyle = changeColor();
+
+                context.fill();
+                // create the image
+                var image = new Image();
+                image.src = canvas.toDataURL();
+                return image;
+            })();
+
+
+
+
+            // render that thing!
+            function render() {
+                // next animation frame
+                requestAnimationFrame(render);
+
+                // update time
+                var newTime = new Date().getTime() / 1000,
+                    deltaTime = newTime - (time || newTime);
+                time = newTime;
+                // clear canvas
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                // create new particles
+                var amount = particleRate * deltaTime;
+                for (var i = 0; i < amount; i++) {
+                    var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+                    var dir = pos.clone().length(settings.particles.velocity);
+                    particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
+                }
+
+                // update and draw particles
+                particles.update(deltaTime);
+                particles.draw(context, image);
+            }
+
+            // handle (re-)sizing of the canvas
+            function onResize() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+            }
+            window.onresize = onResize;
+            setInterval(random1, 2000);
+            // setInterval(random2, 2000)
+            // setInterval(random3, 2000)
+
+            // delay rendering bootstrap
+            setTimeout(function () {
+                onResize();
+                render();
+            }, 10);
+        })(document.getElementById('pink-board'));
+
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        var particlesOnScreen = 245;
+        var particlesArray = [];
+        var w, h;
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+
+        function random(min, max) {
+            return min + Math.random() * (max - min + 1);
+        };
+
+        function clientResize(ev) {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        };
+        window.addEventListener("resize", clientResize);
+
+        function createSnowFlakes() {
+            for (var i = 0; i < particlesOnScreen; i++) {
+                particlesArray.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    opacity: Math.random(),
+                    speedX: random(-1, 1),
+                    speedY: random(7, 0),
+                    radius: random(0.5, 4.2),
+                })
+            }
+        };
+
+        function drawSnowFlakes() {
+            for (var i = 0; i < particlesArray.length; i++) {
+                var gradient = ctx.createRadialGradient(
+                    particlesArray[i].x,
+                    particlesArray[i].y,
+                    0,
+                    particlesArray[i].x,
+                    particlesArray[i].y,
+                    particlesArray[i].radius
+                );
+
+                gradient.addColorStop(0, "rgba(255, 255, 255," + particlesArray[i].opacity + ")");  // white
+                gradient.addColorStop(.8, "rgba(210, 236, 242," + particlesArray[i].opacity + ")");  // bluish
+                gradient.addColorStop(1, "rgba(237, 247, 249," + particlesArray[i].opacity + ")");   // lighter bluish
+
+                ctx.beginPath();
+                ctx.arc(
+                    particlesArray[i].x,
+                    particlesArray[i].y,
+                    particlesArray[i].radius,
+                    0,
+                    Math.PI * 2,
+                    false
+                );
+
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+        };
+
+        function moveSnowFlakes() {
+            for (var i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].x += particlesArray[i].speedX;
+                particlesArray[i].y += particlesArray[i].speedY;
+
+                if (particlesArray[i].y > h) {
+                    particlesArray[i].x = Math.random() * w * 1.5;
+                    particlesArray[i].y = -50;
+                }
+            }
+        };
+
+        function updateSnowFall() {
+            ctx.clearRect(0, 0, w, h);
+            drawSnowFlakes();
+            moveSnowFlakes();
+        };
+
+        setInterval(updateSnowFall, 50);
+        createSnowFlakes();
+
+
+    </script>
+
+</BODY>
+
+</HTML>
