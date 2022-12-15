@@ -72,6 +72,13 @@
             top: 100px;
             left: 0;
             right: 0;
+
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            align-items: center;
+            justify-content: center;
+
             /* color: #ff83c1; */
             /* color: transparent;
             background: conic-gradient(#ffd700 4%, #ff83c1 8%,
@@ -88,20 +95,17 @@
                     #f72f35 95%, #30c5ff 100%);
             background-size: 24%;
             background-clip: text;
+            -webkit-text-fill-color: transparent;
             -webkit-background-clip: text; */
             /* Safari thêm  (-webkit-box-decoration-break: clone) để text chuyển màu */
-            -webkit-text-fill-color: transparent;
         }
 
         #year,
         #days,
         #date {
-            display: flex;
             font-size: 60px;
-            text-align: center;
-            justify-content: center;
             font-weight: bold;
-
+            
             color: transparent;
             background: conic-gradient(#ffd700 4%, #ff83c1 8%,
                     #f72f35 12%, #30c5ff 12%,
@@ -115,8 +119,9 @@
                     #f72f35 75%, #30c5ff 80%,
                     #d1e231 90%, #d09ee1 90%,
                     #f72f35 95%, #30c5ff 100%);
-            background-size: 16%;
+            background-size: 14%;
             background-clip: text;
+
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
