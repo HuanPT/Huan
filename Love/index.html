@@ -105,6 +105,8 @@
         #date {
             font-size: 80px;
             font-weight: bold;
+            /* nếu dùng display = flex ở thẻ con, thì text hiện trên safari sẽ trong suốt.
+             vì vây, phải đặt display = flex ở thẻ cha */
 
             color: transparent;
             background: conic-gradient(#ffd700 4%, #ff83c1 8%,
@@ -309,7 +311,15 @@
             console.log(y.toLocaleString(), x);
             document.getElementById("year").innerHTML = Math.floor(Number(z / 365 / 24 / 60 / 60 / 1000)) + " năm,";
             document.getElementById("days").innerHTML = Math.floor(Number(z / 24 / 60 / 60 / 1000)) + " ngày,";
-            document.getElementById("date").innerHTML = x.toLocaleString().slice(9) + " - " + y.toLocaleString().slice(9);
+            document.getElementById("date").innerHTML = x.toLocaleString("Vn", {
+                day: 'numeric', // numeric, 2-digit
+                year: 'numeric', // numeric, 2-digit
+                month: '2-digit', // numeric, 2-digit, long, short, narrow
+            }) + " - " + y.toLocaleString("Vn", {
+                day: 'numeric', // numeric, 2-digit
+                year: 'numeric', // numeric, 2-digit
+                month: '2-digit', // numeric, 2-digit, long, short, narrow
+            })
         }
         date()
 
