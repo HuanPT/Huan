@@ -208,18 +208,34 @@
     <!-- <canvas id="canvas"></canvas> -->
     <canvas class="snow" id="snow" width="1848" height="515"></canvas>
 
-    <audio autoplay>
+    <audio>
         <source src="./BeautifulInWhite.mp3" type="audio/mpeg">
     </audio>
     <script>
-        // const playBtn = () => {
-        //     const btnPlay = document.querySelector("body")
-        //     btnPlay.addEventListener("click", () => {
-        //         const audio = document.querySelector("audio");
-        //         console.log(audio);
-        //         audio.play()
-        //     })
-        // }
+        const playBtn = () => {
+            const btnPlay = document.querySelector("body")
+            const audio = document.querySelector("audio");
+            btnPlay.addEventListener("click", () => {
+                audio.play();
+            })
+        }
+
+        const btnPause = () => {
+
+            const btnPause = document.querySelector("body")
+            const audio = document.querySelector("audio");
+
+            btnPause.addEventListener("dblclick", () => {
+                console.log(audio);
+                audio.pause();
+            })
+
+            btnPause.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                console.log(audio);
+                audio.pause();
+            })
+        }
 
 
         (function () {
@@ -594,7 +610,8 @@
             // setInterval(random2, 2000)
             // setInterval(random3, 2000)
 
-            // playBtn();
+            playBtn();
+            btnPause();
             // delay rendering bootstrap
             setTimeout(function () {
                 onResize();
