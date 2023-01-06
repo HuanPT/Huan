@@ -38,14 +38,13 @@
         }
 
         .text {
-            position: absolute;
-            display: flex;
+            position: fixed;
+            /* display: flex;
             justify-content: center;
-            align-items: center;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
+            align-items: center; */
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
             font-style: italic;
         }
 
@@ -336,12 +335,12 @@
             console.log(y.toLocaleString(), x);
             document.getElementById("year").innerHTML = Math.floor(Number(z / 365 / 24 / 60 / 60 / 1000)) + " năm,";
             document.getElementById("days").innerHTML = Math.floor(Number(z / 24 / 60 / 60 / 1000)) + " ngày,";
-            document.getElementById("date").innerHTML = x.toLocaleString("Vn", {
-                day: 'numeric', // numeric, 2-digit
+            document.getElementById("date").innerHTML = x.toLocaleString("Vi", {
+                day: '2-digit', // numeric, 2-digit
                 year: 'numeric', // numeric, 2-digit
                 month: '2-digit', // numeric, 2-digit, long, short, narrow
-            }) + " - " + y.toLocaleString("Vn", {
-                day: 'numeric', // numeric, 2-digit
+            }) + " - " + y.toLocaleString("Vi", {
+                day: '2-digit', // numeric, 2-digit
                 year: 'numeric', // numeric, 2-digit
                 month: '2-digit', // numeric, 2-digit, long, short, narrow
             })
