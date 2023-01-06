@@ -225,7 +225,8 @@
             const btnPause = document.querySelector("body")
             const audio = document.querySelector("audio");
 
-            btnPause.addEventListener("dblclick", () => {
+            btnPause.addEventListener("dblclick", (e) => {
+                e.preventDefault();
                 console.log(audio);
                 audio.pause();
             })
