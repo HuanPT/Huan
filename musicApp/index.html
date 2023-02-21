@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="shortcut icon"
+        href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1XDxO4_mffTA_hiQ3HnW0IJiwehfnQMkSFg&usqp=CAU"
+        type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+<body>
+    <div class="player">
+        <!-- Dashboard - Bảng điều khiển -->
+        <div class="dashboard">
+            <!-- Header -->
+            <header>
+                <h4>Now Playing:</h4>
+                <h2>My Love</h2> <!-- Tên bài hát -->
+            </header>
+
+            <!-- CD - mô tả hình đĩa nhạc CD -->
+            <div class="cd">
+                <div class="cd-thumb"
+                    style="background-image: url('https://i.discogs.com/iMnFNueqsilkG3ieMiGU4adfccPXcfGCW15rrfIuXrM/rs:fit/g:sm/q:90/h:600/w:585/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUzODE4/MTQtMTUwNzgzMTQz/Mi0xNDMzLmpwZWc.jpeg');">
+                </div>
+            </div>
+
+            <!-- Control - Phím điều khiển -->
+            <div class="control">
+                <!-- Phím repeat - lặp lại -->
+                <div class="btn btn-repeat">
+                    <i class="fas fa-redo"></i>
+                </div>
+
+                <!-- Phím back - quay lại bài trước -->
+                <div class="btn btn-prev">
+                    <i class="fas fa-step-backward"></i>
+                </div>
+
+                <!-- Phím chuyển đổi play + pause -->
+                <div class="btn btn-toggle-play">
+                    <i class="fas fa-pause icon-pause"></i>
+                    <i class="fas fa-play icon-play"></i>
+                </div>
+
+                <!-- Phím next - qua bài -->
+                <div class="btn btn-next">
+                    <i class="fas fa-step-forward"></i>
+                </div>
+
+                <!-- Phím random - phát ngẫu nhiên -->
+                <div class="btn btn-random">
+                    <i class="fas fa-random"></i>
+                </div>
+            </div>
+
+            <!-- Bộ đếm thời gian song -->
+            <div class="play-number">
+                <span class="play-duration">0:00</span>
+                <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+                <span class="play-remaining">0:00</span>
+            </div>
+            <!-- thanh chạy nhạc -->
+            <!-- <div class="progress-container" id="progress-container">
+                <div class="progress" id="progress"></div>
+            </div> -->
+
+            <!-- giá trị ban đầu (value = 0,), từng bước nhảy (step = 1), giá trị nhỏ nhất (min = 0), giá trị lớn nhất(max=100) -->
+
+            <audio id="audio" src=""></audio>
+        </div>
+
+        <!-- Playlist - danh sách bài hát -->
+        <div class="playlist">
+            <!-- <div class="song">
+                <div class="thumb"
+                    style="background-image: url(https://i.discogs.com/iMnFNueqsilkG3ieMiGU4adfccPXcfGCW15rrfIuXrM/rs:fit/g:sm/q:90/h:600/w:585/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUzODE4/MTQtMTUwNzgzMTQz/Mi0xNDMzLmpwZWc.jpeg);">
+                </div>
+
+                <div class="body">
+                    <h3 class="tittle">Music name</h3>
+                    <p class="author">Singer</p>
+                </div>
+
+                <div class="option">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <script src="./assets/js/app.js"></script>
+</body>
+
+<!-- Design from: https://static.collectui.com/shots/3671744/musicloud-revolutionary-app-for-music-streaming-large -->
+
+</html>

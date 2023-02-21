@@ -1,0 +1,217 @@
+/* Màu chủ đạo */
+:root {
+  --primary-color: #ec1f55;
+  --text-color: #333;
+}
+
+/* Reset Css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; /* tính kế thừa */
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+html {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.player {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.player .icon-pause {
+  display: none; /* trạng thái bt thì nút pause sẽ ẩn */
+}
+
+.player.playing .icon-pause {
+  display: inline-block; /* trạng thái lúc ấn vào playing thì pause sẽ hiện */
+}
+
+.player.playing .icon-play {
+  display: none; /* pause hiện thì play ẩn */
+}
+
+/* Dashboard */
+.dashboard {
+  top: 0;
+  width: 100%; /* 100% của thẻ chứa nó là 480px */
+  position: fixed;
+  max-width: 480px;
+  border-radius: 10px;
+  padding: 16px 16px 14px;
+  background-color: #fff;
+  border-bottom: 1px solid #ebebeb;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+header h4 {
+  color: var(--primary-color);
+  font-size: 12px;
+}
+
+header h2 {
+  color: var(--text-color);
+  font-size: 20px;
+}
+
+/* CD */
+.cd {
+  display: flex;
+  margin: auto;
+  width: 200px;
+}
+
+.cd-thumb {
+  width: 100%; /* 100% thẻ chứa nó là 200px*/
+  margin: auto;
+  padding-top: 100%;
+  border-radius: 50%;
+  background-size: cover; /* tự chia tỷ lệ ảnh */
+  background-color: #333;
+}
+
+/* Control */
+.control {
+  display: flex;
+  align-items: center;
+  padding: 18px 0 8px 0;
+  justify-content: space-around; /* căn khoảng cách giữa các item đều nhau */
+}
+
+.control.btn {
+  color: #666;
+  padding: 18px;
+  font-size: 18px;
+}
+
+.control .btn.active {
+  color: var(--primary-color);
+}
+
+.control .btn-toggle-play {
+  width: 56px;
+  height: 56px;
+  color: #fff;
+  font-size: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+}
+
+.play-number {
+  display: flex;
+  font-weight: 500;
+  color: var(--primary-color);
+  justify-content: space-between;
+}
+
+.progress {
+  width: 340px;
+  height: 6px;
+  opacity: 0.7;
+  margin: auto;
+  outline: none; /* đường viền bao ngoài thanh chạy nhạc */
+  border-radius: 3px;
+  background: #d3d3d3;
+  -webkit-appearance: none; /* ẩn thanh chạy trình phát nhạc  */
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+.play-duration {
+  width: 50px;
+  padding: 0 12px;
+}
+
+.play-remaining {
+  width: 50px;
+  padding: 0 12px;
+}
+
+.progress::-webkit-slider-thumb {
+  width: 12px;
+  height: 6px;
+  cursor: pointer;
+  appearance: none; /* bỏ con trỏ chạy nhạc trên trình duyệt */
+  -webkit-appearance: none; /* bỏ con trỏ chạy nhạc trên trình duyệt hỗ trợ safari-chrome */
+  background-color: var(--primary-color);
+}
+
+/* Playlist - danh sách bài hát */
+.playlist {
+  padding: 12px;
+  margin-top: 408px;
+}
+
+.song {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.song.active {
+  background-color: var(--primary-color);
+}
+
+/* tạo kiểu cho liên kết đang hoạt động,
+khi hoạt động thì opacity: 0.8 
+  :active lớp giả nắm bắt hành vi click chuột.
+*/
+.song:active {
+  opacity: 0.7;
+}
+
+/* khi hoạt động thì option, author, titlte có color: #fff */
+.song.active .option,
+.song.active .author,
+.song.active .title {
+  color: #fff !important;
+}
+
+/* avatar music list */
+.song .thumb {
+  width: 44px;
+  height: 44px;
+  margin: 0 8px;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+.song .body {
+  flex: 1;
+  padding: 0 16px;
+}
+
+.song .title {
+  font-size: 18px;
+  color: var(--text-color);
+}
+
+.song .author {
+  color: #999;
+  font-size: 14px;
+}
+
+.song .option {
+  font-size: 18px;
+  padding: 16px 8px;
+  color: #999;
+}
