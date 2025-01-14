@@ -445,6 +445,7 @@
             left: 50%;
             transform: translateX(-50%);
             font-style: italic;
+            user-select: none;
         }
 
         .text1 {
@@ -539,9 +540,10 @@
                     #f72f35 95%, #30c5ff 100%);
             background-size: 25%;
             background-clip: text;
-
+            /* text-shadow: #ffcc0066 1px 0 10px; */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            user-select: none;
         }
 
         #particle_canvas {
